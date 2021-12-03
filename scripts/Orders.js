@@ -1,23 +1,34 @@
-import { getOrders, addCustomOrder, getMetals } from "./database.js"
+import { getOrders, addCustomOrder, getMetals, getSizes, getStyles } from "./database.js"
 
+
+
+const buildOrderListItem = (order) => {
 const metals = getMetals()
-const order =getOrders();
+const orders =getOrders();
 
-// Remember that the function you pass to find() must return true/false
+    // Remember that the function you pass to find() must return true/false
 const foundMetal = metals.find(
     (metal) => {
         return metal.id === order.metalId
     }
 )
-const totalCost = foundMetal.price
 
+const foundStyle =getStyles().find((style)=> style.id === order.styleId);
+const foundSize =getSizes().find((size)=> size.id === order.sizeId);
+const totalCost = foundMetal.price + foundStyle.price + foundSize.price;
 
-const buildOrderListItem = (order) => {
-    
+const costString = totalCost.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD"
+})
+
+  
     return `<li>
-        Order #${order.id} was placed on ${order.timestamp}
-    </li>`
+    Order #${order.id} cost ${costString}
+</li>`
 }
+
+
 
 export const Orders = () => {
     /*
