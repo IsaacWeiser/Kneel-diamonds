@@ -39,6 +39,8 @@ const database = {
     }
 }
 
+
+
 export const getMetals = () => {
     return database.metals.map(metal => ({...metal}))
 }
@@ -54,6 +56,9 @@ export const getStyles = () => {
 export const getOrders = () => {
     return database.customOrders.map(order => ({...order}))
 }
+
+
+
 
 export const setMetal = (id) => {
     database.orderBuilder.metalId = id
@@ -82,7 +87,7 @@ export const addCustomOrder = () => {
     database.customOrders.push(newOrder)
 
     // Reset the temporary state for user choices
-    database.orderBuilder = {}
+    //database.orderBuilder = {}
 
     // Broadcast a notification that permanent state has changed
     document.dispatchEvent(new CustomEvent("stateChanged"))
